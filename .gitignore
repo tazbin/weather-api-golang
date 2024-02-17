@@ -1,0 +1,36 @@
+# Compiled binary
+*.exe
+*.o
+*.out
+*.test
+*.prof
+
+# Dependency directories
+/vendor/
+/go.sum
+
+# Test binary, built with "go test -c"
+*.test
+
+# Output of the go coverage tool, specifically when used with LiteIDE
+*.out
+
+# Ignore .env file
+.env
+
+# Ignore binaries from the build directory
+/bin/
+
+# Ignore IDE files
+.idea/
+.vscode/
+*.sublime-workspace
+
+# Ignore any file with .DS_Store (used by macOS to store custom attributes of a folder)
+.DS_Store
+
+# Ignore executables
+*.exe
+*.dll
+*.so
+*.dylib
