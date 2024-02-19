@@ -144,5 +144,5 @@ func main() {
 		ctx.IndentedJSON(http.StatusOK, cityList)
 	})
 
-	router.Run("localhost:9000")
+	router.Run("0.0.0.0:8000")
 }
