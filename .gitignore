@@ -5,6 +5,8 @@
 *.test
 *.prof
 
+/tmp
+
 # Dependency directories
 /vendor/
 /go.sum
