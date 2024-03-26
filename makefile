@@ -8,7 +8,7 @@ api-hot:
 	@$$(go env GOPATH)/bin/air
 
 docker-build:
-	@docker build -t ${IMAGE_NAME} .
+	@docker build --platform linux/amd64 -t ${IMAGE_NAME} .
 	@echo "docker image ${IMAGE_NAME} build successful..."
 
 docker-run: docker-build

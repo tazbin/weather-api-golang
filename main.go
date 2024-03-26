@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"net/url"
 
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
@@ -87,9 +88,21 @@ func main() {
 
 	router.GET("/forcast", func(ctx *gin.Context) {
 		id := ctx.Query("id")
-		qParams := fmt.Sprintf("key=%s&q=id:%s&days=5&aqi=no&alerts=no", viper.GetString("API_KEY"), id)
-		url := viper.GetString("BASE_URL") + "/forecast.json?" + qParams
-		resp, err := http.Get(url)
+		// qParams := fmt.Sprintf("key=%s&q=id:%s&days=5&aqi=no&alerts=no", viper.GetString("API_KEY"), id)
+		// url := viper.GetString("BASE_URL") + "/forecast.json?" + qParams
+
+		baseURL := viper.GetString("BASE_URL") + "/forecast.json"
+
+		queryParams := url.Values{}
+		queryParams.Add("key", viper.GetString("API_KEY"))
+		queryParams.Add("q", "id:"+id)
+		queryParams.Add("days", "5")
+		queryParams.Add("aqi", "no")
+		queryParams.Add("alerts", "no")
+
+		fullURL := fmt.Sprintf("%s?%s", baseURL, queryParams.Encode())
+
+		resp, err := http.Get(fullURL)
 		if err != nil {
 			ctx.IndentedJSON(http.StatusForbidden, gin.H{
 				"message": err.Error(),
@@ -116,10 +129,18 @@ func main() {
 
 	router.GET("/city", func(ctx *gin.Context) {
 		name := ctx.Query("name")
-		qParams := fmt.Sprintf("key=%s&q=%s", viper.GetString("API_KEY"), name)
-		url := viper.GetString("BASE_URL") + "/search.json?" + qParams
+		// qParams := fmt.Sprintf("key=%s&q=%s", viper.GetString("API_KEY"), name)
+		// url := viper.GetString("BASE_URL") + "/search.json?" + qParams
 
-		resp, err := http.Get(url)
+		baseURL := viper.GetString("BASE_URL") + "/search.json"
+
+		queryParams := url.Values{}
+		queryParams.Add("key", viper.GetString("API_KEY"))
+		queryParams.Add("q", name)
+
+		fullURL := fmt.Sprintf("%s?%s", baseURL, queryParams.Encode())
+
+		resp, err := http.Get(fullURL)
 		if err != nil {
 			ctx.IndentedJSON(http.StatusForbidden, gin.H{
 				"message": err.Error(),
